@@ -3,6 +3,7 @@ import pyupbit
 import pandas as pd
 import numpy as np
 import logging
+import sys
 
 # 1. 데이터 수집 및 전처리
 def get_data(ticker, interval='minute1', count=200):
@@ -37,7 +38,10 @@ def generate_signals(data):
 # 4. 매매 실행
 def execute_trading_strategy(ticker, access_key, secret_key):
     # 로깅 설정
-    logging.basicConfig(filename='trading.log', level=logging.INFO, format='%(asctime)s - %(message)s')
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s', handlers=[
+        logging.FileHandler('trading.log'),
+        logging.StreamHandler(sys.stdout)
+    ])
 
     upbit = pyupbit.Upbit(access_key, secret_key)
     position = None
@@ -70,6 +74,7 @@ def execute_trading_strategy(ticker, access_key, secret_key):
 
         except Exception as e:
             logging.error(f'Error in trading strategy: {e}')
+            print(f'Error in trading strategy: {e}')
             time.sleep(60)
 
 # 메인 함수
