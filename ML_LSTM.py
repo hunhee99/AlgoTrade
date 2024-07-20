@@ -8,7 +8,7 @@ from tensorflow.keras.layers import LSTM, Dense, Dropout
 import logging
 import os
 
-# 1. 데이터 수집 및 전처리
+# 1. 데이터 수집 및 전처리-
 def get_data(ticker, interval='minute1', count=200):
     df = pyupbit.get_ohlcv(ticker, interval=interval, count=count)
     return df
